@@ -1,0 +1,14 @@
+name: LibertyCity
+version: '${project.version}'
+main: com.xiii.libertycity.LibertyCity
+authors: [ XIII___ ]
+description: LibertyCity Plugin
+commands:
+  clearlag:
+    description: LibertyCity's clearlag command.
+    usage: /clearlag
+    permission: LibertyCity
+  kick:
+    description: LibertyCity's kick command.
+    usage: /kick
+    permission: LibertyCity
