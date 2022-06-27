@@ -1,7 +1,7 @@
 package com.xiii.libertycity.roleplay.items;
 
 import com.xiii.libertycity.LibertyCity;
-import com.xiii.libertycity.core.data.player.DB;
+import com.xiii.libertycity.core.data.player.Data;
 import com.xiii.libertycity.core.data.player.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -19,8 +19,8 @@ public class SearchTool implements Listener {
     public void onPlayerRightClick(PlayerInteractEntityEvent e){
         Bukkit.getScheduler().scheduleSyncDelayedTask(LibertyCity.instance, () -> {
 
-            DB.data.registerUserJoin(e.getPlayer());
-            PlayerData data = DB.data.getUserData(e.getPlayer());
+            Data.data.registerUserJoin(e.getPlayer());
+            PlayerData data = Data.data.getUserData(e.getPlayer());
 
             if(data.rpCurrentJob == "§bPolicier") {
 
