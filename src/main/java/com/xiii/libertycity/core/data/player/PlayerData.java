@@ -1,14 +1,14 @@
-package com.xiii.libertycity.data;
+package com.xiii.libertycity.core.data.player;
 
-import com.xiii.libertycity.core.utils.Timer;
+import com.xiii.libertycity.core.utils.TimerUtility;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
 public class PlayerData {
 
-    // Server/Plugin Related
-    public Timer timer = new Timer();
+    //Temp Stuff
+    public TimerUtility timerUtility = new TimerUtility();
     public boolean tempvarjoin = true;
 
     // Main Player Useful Related
@@ -21,9 +21,6 @@ public class PlayerData {
     public int globalID;
     public String rpPrenom;
     public String rpNom;
-    public boolean confirmWait1 = false;
-    public boolean confirmWait2 = false;
-    public boolean confirmWait3 = false;
     public int rpAge = -1;
     public int rpBank = -1;
     public int rpCurrentChat = 0;
