@@ -1,11 +1,11 @@
-package com.xiii.libertycity.data;
+package com.xiii.libertycity.core.data.player;
 
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
-public enum Data {
+public enum DB {
     data;
 
     public ArrayList<PlayerData> users = new ArrayList<>();
