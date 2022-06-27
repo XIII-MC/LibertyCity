@@ -1,0 +1,20 @@
+Add:
+
+- Missing features from LCORE.sk (Skript)
+
+- Make CustomChat format (HRP, RP, Police, Gang)
+- Wallet (Storing bills)
+- Realistic RP Death
+- Auto-Clearlag
+- SmartPhone
+
+Finish:
+
+- ATM
+
+Fix:
+
+- ServerData
+- Data not saving (After leave/stop/restart)
+- CooldownChat (ServerData)
+- MuteChat (ServerData)
