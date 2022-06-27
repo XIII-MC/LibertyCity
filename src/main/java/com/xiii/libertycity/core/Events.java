@@ -1,13 +1,15 @@
 package com.xiii.libertycity.core;
 
 import com.xiii.libertycity.LibertyCity;
-import com.xiii.libertycity.data.Data;
-import com.xiii.libertycity.data.PlayerData;
+import com.xiii.libertycity.core.data.player.DB;
+import com.xiii.libertycity.core.data.player.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -17,8 +19,8 @@ public class Events implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(LibertyCity.instance, () -> {
 
-            Data.data.registerUserJoin(e.getPlayer());
-            PlayerData data = Data.data.getUserData(e.getPlayer());
+            DB.data.registerUserJoin(e.getPlayer());
+            PlayerData data = DB.data.getUserData(e.getPlayer());
 
             Bukkit.broadcastMessage(e.getPlayer() + "A REJOINT AVEC VARS -> " + data.rpNom + " " + data.rpPrenom + " " + data.rpAge + " " + data.playerID);
 
@@ -34,6 +36,8 @@ public class Events implements Listener {
                         }
                     }
                 }
+            } else {
+                e.setJoinMessage("");
             }
 
         });
@@ -43,8 +47,8 @@ public class Events implements Listener {
     public void onQuit(PlayerQuitEvent e) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(LibertyCity.instance, () -> {
 
-            Data.data.registerUserJoin(e.getPlayer());
-            PlayerData data = Data.data.getUserData(e.getPlayer());
+            DB.data.registerUserJoin(e.getPlayer());
+            PlayerData data = DB.data.getUserData(e.getPlayer());
 
             if(data.playerID > -1) {
                 if (!e.getPlayer().hasPermission("LibertyCity.silent.join")) {
@@ -57,6 +61,37 @@ public class Events implements Listener {
                             p.sendMessage("§4§LSTAFF §7» §8" + e.getPlayer() + " §7a quitté le serveur.");
                         }
                     }
+                }
+            } else {
+                e.setQuitMessage("");
+            }
+
+        });
+    }
+
+    @EventHandler
+    public void onCommand(PlayerCommandPreprocessEvent e) {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(LibertyCity.instance, () -> {
+
+            if(e.getMessage().contains("calc")) {
+                for(Player p : Bukkit.getOnlinePlayers()) {
+                    if(p.hasPermission("LibertyCity.anticheat.alerts")) p.sendMessage("§7[§4⚠§7] §f" + e.getPlayer().getName() + " §7failed §fCrasher §7(A)");
+                }
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "/kick "+ e.getPlayer().getName() + " Triche -s");
+                e.setCancelled(true);
+            }
+
+        });
+    }
+
+    @EventHandler
+    public void onRestrictedInventory(InventoryOpenEvent e) {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(LibertyCity.instance, () -> {
+
+            if(e.getInventory().getName().contains("Player") || e.getInventory().getName().contains("Anvil")) {
+                if(!e.getPlayer().hasPermission("LibertyCity.bypass.inventory")) {
+                    e.setCancelled(true);
+                    e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cLes crafts/enclumes sont désactivés !");
                 }
             }
 
