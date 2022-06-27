@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
-public enum DB {
+public enum Data {
     data;
 
     public ArrayList<PlayerData> users = new ArrayList<>();
@@ -37,17 +37,11 @@ public enum DB {
     }
 
     public PlayerData getUserData(Player p) {
-        try {
-            for (PlayerData user : getUsers()) {
-                if (p != null) {
-                    if (user.getUuid() == p.getUniqueId()) {
+        for (PlayerData user : users) {
+            if (user.uuid.toString().contains(p.getUniqueId().toString())) {
 
-                        return user;
-                    }
-                }
+                return user;
             }
-        }catch (ConcurrentModificationException e) {
-
         }
         return null;
     }

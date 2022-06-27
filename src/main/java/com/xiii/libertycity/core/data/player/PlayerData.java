@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-public class PlayerData {
+public class PlayerData implements java.io.Serializable {
 
     //Temp Stuff
     public TimerUtility timerUtility = new TimerUtility();
