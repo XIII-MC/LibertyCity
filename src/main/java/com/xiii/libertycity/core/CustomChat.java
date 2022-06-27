@@ -1,4 +1,4 @@
-package com.xiii.libertycity.roleplay;
+package com.xiii.libertycity.core;
 
 import org.bukkit.event.Listener;
 
