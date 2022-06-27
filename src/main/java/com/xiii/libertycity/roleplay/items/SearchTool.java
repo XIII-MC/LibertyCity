@@ -1,8 +1,8 @@
-package com.xiii.libertycity.roleplay;
+package com.xiii.libertycity.roleplay.items;
 
 import com.xiii.libertycity.LibertyCity;
-import com.xiii.libertycity.data.Data;
-import com.xiii.libertycity.data.PlayerData;
+import com.xiii.libertycity.core.data.player.DB;
+import com.xiii.libertycity.core.data.player.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -19,15 +19,15 @@ public class SearchTool implements Listener {
     public void onPlayerRightClick(PlayerInteractEntityEvent e){
         Bukkit.getScheduler().scheduleSyncDelayedTask(LibertyCity.instance, () -> {
 
-            Data.data.registerUserJoin(e.getPlayer());
-            PlayerData data = Data.data.getUserData(e.getPlayer());
+            DB.data.registerUserJoin(e.getPlayer());
+            PlayerData data = DB.data.getUserData(e.getPlayer());
 
             if(data.rpCurrentJob == "§bPolicier") {
 
                 Entity target = e.getRightClicked();
                 Player player = e.getPlayer();
 
-                if (target.getType().equals(EntityType.PLAYER)) {
+                if (target.getType().equals(EntityType.PLAYER) && player.getInventory().getItemInMainHand().getTypeId() == 7428) {
                     HumanEntity targetPlayer = (HumanEntity) target;
                     Inventory targetInventory = targetPlayer.getInventory();
 
@@ -35,6 +35,7 @@ public class SearchTool implements Listener {
                     target.sendMessage("§2§lLiberty§a§lCity §7» §fVous vous faites fouillé par §e" + player);
                     player.openInventory(targetInventory);
                 }
+
             } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas de la Police !");
         });
     }
