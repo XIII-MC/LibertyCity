@@ -1,6 +1,6 @@
 package com.xiii.libertycity.core.utils;
 
-public class Timer {
+public class TimerUtility {
 
     private static long lastMS = 1L;
 
