@@ -1,8 +1,9 @@
 package com.xiii.libertycity.core;
 
 import com.xiii.libertycity.LibertyCity;
-import com.xiii.libertycity.core.data.player.DB;
+import com.xiii.libertycity.core.data.player.Data;
 import com.xiii.libertycity.core.data.player.PlayerData;
+import com.xiii.libertycity.core.utils.FileUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,8 +20,8 @@ public class Events implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(LibertyCity.instance, () -> {
 
-            DB.data.registerUserJoin(e.getPlayer());
-            PlayerData data = DB.data.getUserData(e.getPlayer());
+            Data.data.registerUserJoin(e.getPlayer());
+            PlayerData data = Data.data.getUserData(e.getPlayer());
 
             Bukkit.broadcastMessage(e.getPlayer() + "A REJOINT AVEC VARS -> " + data.rpNom + " " + data.rpPrenom + " " + data.rpAge + " " + data.playerID);
 
@@ -45,10 +46,11 @@ public class Events implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
+        FileUtility.savePlayerData(Data.data.getUserData(e.getPlayer()));
         Bukkit.getScheduler().scheduleSyncDelayedTask(LibertyCity.instance, () -> {
 
-            DB.data.registerUserJoin(e.getPlayer());
-            PlayerData data = DB.data.getUserData(e.getPlayer());
+            Data.data.registerUserJoin(e.getPlayer());
+            PlayerData data = Data.data.getUserData(e.getPlayer());
 
             if(data.playerID > -1) {
                 if (!e.getPlayer().hasPermission("LibertyCity.silent.join")) {

@@ -1,7 +1,7 @@
 package com.xiii.libertycity.roleplay.events;
 
 import com.xiii.libertycity.LibertyCity;
-import com.xiii.libertycity.core.data.player.DB;
+import com.xiii.libertycity.core.data.player.Data;
 import com.xiii.libertycity.core.data.player.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -23,7 +23,7 @@ public class RegisterAccount implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onMove(PlayerMoveEvent e) {
-        PlayerData data = DB.data.getUserData(e.getPlayer());
+        PlayerData data = Data.data.getUserData(e.getPlayer());
         if(data.playerID == -1) {
             e.getPlayer().sendMessage("slAYED");
             e.setCancelled(true);
@@ -32,7 +32,7 @@ public class RegisterAccount implements Listener {
 
     @EventHandler
     public void commandChecker(PlayerCommandPreprocessEvent e) {
-        PlayerData data = DB.data.getUserData(e.getPlayer());
+        PlayerData data = Data.data.getUserData(e.getPlayer());
 
         //if(data.playerID == -1) e.setCancelled(true);
 
@@ -41,7 +41,7 @@ public class RegisterAccount implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void forRegister(PlayerJoinEvent e) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(LibertyCity.instance, () -> {
-            PlayerData data = DB.data.getUserData(e.getPlayer());
+            PlayerData data = Data.data.getUserData(e.getPlayer());
 
             e.getPlayer().sendTitle("§§§l§k|||§r §fBienvenue sur §2§lLiberty§a§lCity §6§lV5 §f! §4§l§k|||", "§6§k§l||§r §7Commencer par écrire votre §e§nPrénom RP§r §6§k§l||", 0, 14000, 0);
             if(data.playerID == -1) {
@@ -66,11 +66,11 @@ public class RegisterAccount implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void forChatRegister(AsyncPlayerChatEvent e) {
-        PlayerData tdt = DB.data.getUserData(e.getPlayer());
+        PlayerData tdt = Data.data.getUserData(e.getPlayer());
         if(tdt.playerID == -1) e.setCancelled(true);
         Bukkit.getScheduler().runTaskAsynchronously(LibertyCity.instance, () -> {
 
-            PlayerData data = DB.data.getUserData(e.getPlayer());
+            PlayerData data = Data.data.getUserData(e.getPlayer());
             List<String> optYes = Arrays.asList("yes", "oui", "o", "y", "Yes", "Oui", "O", "Y", "Yas", "yas", "ye", "Ye", "Ya", "ya");
             List<String> optNo = Arrays.asList("no", "non", "n", "annule", "cancel", "nah", "Non", "No", "N", "Nah");
             //List<String> remCara = Arrays.asList(",", "?", ";", ".", ":", "/", "!", "^", "¨", "$", "£", "¤", "ù", "%", "*", "µ", ")", "=", "+", "}", "°", "]", "~", "'", "{", "(", "[", "-", "|", "`", "_", "@", "²", "&", "<", ">", "#");
