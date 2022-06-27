@@ -1,4 +1,4 @@
-package com.xiii.libertycity.core.command;
+package com.xiii.libertycity.core.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -28,7 +28,7 @@ public class ClearLag implements CommandExecutor {
                         current.remove();
                     }
                 }
-                if(sender instanceof Player) sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + cItemsAmount + " §aentitées retirées.");
+                if(sender instanceof Player) sender.sendMessage("§2§lLiberty§a§lCity §7» §6" + cItemsAmount + " §fentitées retirées.");
                 return true;
             }
         } else if(sender instanceof Player) sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission insufisante.");
