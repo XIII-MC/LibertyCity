@@ -1,4 +1,4 @@
-package com.xiii.libertycity.roleplay;
+package com.xiii.libertycity.roleplay.events;
 
 import com.xiii.libertycity.LibertyCity;
 import org.bukkit.Bukkit;
