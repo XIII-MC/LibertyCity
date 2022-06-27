@@ -7,8 +7,28 @@ commands:
   clearlag:
     description: LibertyCity's clearlag command.
     usage: /clearlag
-    permission: LibertyCity
+    permission: LibertyCity.STAFF
   kick:
     description: LibertyCity's kick command.
     usage: /kick
-    permission: LibertyCity
+    permission: LibertyCity.STAFF
+  ping:
+    description: LibertyCity's ping command.
+    usage: /ping
+    permission: LibertyCity.BASIC
+  mutechat:
+    description: LibertyCity's mutechat command.
+    usage: /mutechat
+    permission: LibertyCity.STAFF
+  cooldownchat:
+    description: LibertyCity's cooldownchat command.
+    usage: /cooldownchat
+    permission: LibertyCity.STAFF
+  clearchat:
+    description: LibertyCity's clearchat command.
+    usage: /clearchat
+    permission: LibertyCity.STAFF
+  atm:
+    description: LibertyCity's atm command.
+    usage: /atm
+    permission: LibertyCity.DEBUG
