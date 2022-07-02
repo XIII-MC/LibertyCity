@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
 
-public class PingUtility {
+public class PingUtil {
 
     public static int getPing(Player p) throws ReflectiveOperationException {
         Object entityPlayer = p.getClass().getDeclaredMethod("getHandle").invoke(p);
