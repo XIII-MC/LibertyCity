@@ -72,3 +72,47 @@ commands:
     description: LibertyCity's spectator gamemode command.
     usage: /gmsp
     permission: LibertyCity.STAFF
+  clear:
+    description: LibertyCity's clear command.
+    usage: /clear
+    permission: LibertyCity.STAFF
+  ci:
+    description: LibertyCity's clear command.
+    usage: /ci
+    permission: LibertyCity.STAFF
+  feed:
+    description: LibertyCity's feed command.
+    usage: /feed
+    permission: LibertyCity.STAFF
+  heal:
+    description: LibertyCity's heal command.
+    usage: /heal
+    permission: LibertyCity.STAFF
+  fly:
+    description: LibertyCity's fly command.
+    usage: /fly
+    permission: LibertyCity.STAFF
+  teleport:
+    description: LibertyCity's teleport command.
+    usage: /teleport
+    permission: LibertyCity.STAFF
+  tp:
+    description: LibertyCity's teleport command.
+    usage: /tp
+    permission: LibertyCity.STAFF
+  day:
+    description: LibertyCity's day command.
+    usage: /day
+    permission: LibertyCity.STAFF
+  night:
+    description: LibertyCity's night command.
+    usage: /night
+    permission: LibertyCity.STAFF
+  v:
+    description: LibertyCity's v command.
+    usage: /v
+    permission: LibertyCity.STAFF
+  vanish:
+    description: LibertyCity's vanish command.
+    usage: /vanish
+    permission: LibertyCity.STAFF
