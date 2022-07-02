@@ -34,7 +34,7 @@ public class CooldownChat implements CommandExecutor {
                     }
                 }
                 return true;
-            }
+            } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission Insuffisante.");
         }
     return false;
     }

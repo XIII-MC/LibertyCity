@@ -13,6 +13,7 @@ public class PlayerData implements java.io.Serializable {
     public boolean isBanned;
 
     public double lastReport = 30000;
+    public boolean isVanished = false;
 
     public int playerID;
     public String rpPrenom;

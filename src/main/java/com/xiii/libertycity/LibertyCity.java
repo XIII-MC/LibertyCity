@@ -47,6 +47,19 @@ public final class LibertyCity extends JavaPlugin {
         Bukkit.getPluginCommand("gms").setExecutor(new Gamemode.GMS());
         Bukkit.getPluginCommand("gmc").setExecutor(new Gamemode.GMC());
         Bukkit.getPluginCommand("gmsp").setExecutor(new Gamemode.GMSP());
+        Bukkit.getPluginCommand("clear").setExecutor(new ClearInv());
+        Bukkit.getPluginCommand("ci").setExecutor(new ClearInv());
+        Bukkit.getPluginCommand("feed").setExecutor(new Feed());
+        Bukkit.getPluginCommand("heal").setExecutor(new Heal());
+        Bukkit.getPluginCommand("fly").setExecutor(new Fly());
+        Bukkit.getPluginCommand("spy").setExecutor(new SpyChat());
+        Bukkit.getPluginCommand("tp").setExecutor(new Teleport());
+        Bukkit.getPluginCommand("teleport").setExecutor(new Teleport());
+        Bukkit.getPluginCommand("unban").setExecutor(new Unban());
+        Bukkit.getPluginCommand("day").setExecutor(new TimeSet());
+        Bukkit.getPluginCommand("night").setExecutor(new TimeSet());
+        Bukkit.getPluginCommand("vanish").setExecutor(new Vanish());
+        Bukkit.getPluginCommand("v").setExecutor(new Vanish());
         Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eLoading Events...");
         Bukkit.getPluginManager().registerEvents(new Events(), this);
         Bukkit.getPluginManager().registerEvents(new AnkleEvent(), this);
@@ -56,6 +69,7 @@ public final class LibertyCity extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new SearchItem(), this);
         Bukkit.getPluginManager().registerEvents(new ATMGUI(), this);
         Bukkit.getPluginManager().registerEvents(new BinGUI(), this);
+        Bukkit.getPluginManager().registerEvents(new Vanish(), this);
         Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eReading YML DataBase (PDB)...");
         FileUtil.readPlayerDatas();
         Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eReading YML DataBase (SDB)...");

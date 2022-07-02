@@ -30,7 +30,7 @@ public class Gamemode implements CommandExecutor {
                                 target.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §e§nsurvie");
                             }
                         }
-                    }
+                    } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission Insuffisante.");
                 }
 
                 if(args[0].equalsIgnoreCase("c") || args[0].equalsIgnoreCase("creatif") || args[0].equalsIgnoreCase("creative")) {
@@ -45,7 +45,7 @@ public class Gamemode implements CommandExecutor {
                                 target.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §e§ncréatif");
                             }
                         }
-                    }
+                    } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission Insuffisante.");
                 }
 
                 if(args[0].equalsIgnoreCase("sp") || args[0].equalsIgnoreCase("spectateur") || args[0].equalsIgnoreCase("spectator")) {
@@ -60,7 +60,7 @@ public class Gamemode implements CommandExecutor {
                                 target.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §e§nspectateur");
                             }
                         }
-                    }
+                    } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission Insuffisante.");
                 }
 
                 if(args[0].equalsIgnoreCase("a") || args[0].equalsIgnoreCase("aventure") || args[0].equalsIgnoreCase("adventure")) {
@@ -75,9 +75,9 @@ public class Gamemode implements CommandExecutor {
                                 target.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §e§naventure");
                             }
                         }
-                    }
+                    } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission Insuffisante.");
                 }
-            }
+            } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission Insuffisante.");
         }
 
         return false;
@@ -102,8 +102,8 @@ public class Gamemode implements CommandExecutor {
                                 target.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §e§ncréatif");
                             }
                         }
-                    }
-                }
+                    } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission Insuffisante.");
+                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission Insuffisante.");
             }
             return false;
         }
@@ -128,8 +128,8 @@ public class Gamemode implements CommandExecutor {
                                 target.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §e§nsurvie");
                             }
                         }
-                    }
-                }
+                    } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission Insuffisante.");
+                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission Insuffisante.");
             }
             return false;
         }
@@ -154,8 +154,8 @@ public class Gamemode implements CommandExecutor {
                                 target.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §e§naventure");
                             }
                         }
-                    }
-                }
+                    } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission Insuffisante.");
+                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission Insuffisante.");
             }
             return false;
         }
@@ -180,8 +180,8 @@ public class Gamemode implements CommandExecutor {
                                 target.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais en §e§nspectateur");
                             }
                         }
-                    }
-                }
+                    } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission Insuffisante.");
+                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission Insuffisante.");
             }
             return false;
         }

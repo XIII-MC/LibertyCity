@@ -38,7 +38,7 @@ public class Spawn implements CommandExecutor {
                     sender.sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Il y a trop d'aguments.");
                     return true;
                 }
-            }
+            } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission Insuffisante.");
         }
 
         return false;

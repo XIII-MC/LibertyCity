@@ -28,7 +28,7 @@ public class Teleport implements CommandExecutor {
                         target.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez été téléporté à §6" + target2.getName());
                     } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Un des joueurs n'est pas en ligne");
                 } else if(args.length > 2) sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Trop d'arguments");
-            }
+            } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission Insuffisante.");
         }
 
         return false;

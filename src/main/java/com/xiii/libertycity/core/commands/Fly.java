@@ -35,9 +35,9 @@ public class Fly implements CommandExecutor {
                             sender.sendMessage("§2§lLiberty§a§lCity §7» §fFly §c§ndésactivé");
                             sender.sendMessage("§2§lLiberty§a§lCity §7» §fFly pour §6" + target.getName() + "§c§ndésactivé");
                         }
-                    }
+                    } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission Insuffisante.");
                  }
-            }
+            } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission Insuffisante.");
         }
 
         return false;
