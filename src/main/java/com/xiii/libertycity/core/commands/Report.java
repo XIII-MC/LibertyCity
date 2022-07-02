@@ -33,7 +33,7 @@ public class Report implements CommandExecutor {
                                 p.sendMessage(" ");
                                 p.sendMessage("§c=-=-=-=-=-= §4§lREPORT §c=-=-=-=-=-=");
                                 p.sendMessage(" ");
-                                p.sendMessage("     §a" + sender.getName() + " §7(" + data.rpPoliceRank + " " + data.rpNom + "§7) a signlé(e) §c" + target.getName() + " §7(" + temp.rpPrenom + " " + temp.rpNom + "§7)");
+                                p.sendMessage("     §a" + sender.getName() + " §7(" + data.rpPrenom + " " + data.rpNom + "§7) a signlé(e) §c" + target.getName() + " §7(" + temp.rpPrenom + " " + temp.rpNom + "§7)");
                                 p.sendMessage("     §7Raison » §cNon Spécifiée.");
                                 p.sendMessage(" ");
                                 p.sendMessage("§c=-=-=-=-=-= §4§lREPORT §c=-=-=-=-=-=");
@@ -52,7 +52,7 @@ public class Report implements CommandExecutor {
                                 p.sendMessage(" ");
                                 p.sendMessage("§c=-=-=-=-=-= §4§lREPORT §c=-=-=-=-=-=");
                                 p.sendMessage(" ");
-                                p.sendMessage("     §a" + sender.getName() + " §7(" + data.rpPoliceRank + " " + data.rpNom + "§7) a signlé(e) §c" + target.getName() + " §7(" + temp.rpPrenom + " " + temp.rpNom + "§7)");
+                                p.sendMessage("     §a" + sender.getName() + " §7(" + data.rpPrenom + " " + data.rpNom + "§7) a signlé(e) §c" + target.getName() + " §7(" + temp.rpPrenom + " " + temp.rpNom + "§7)");
                                 p.sendMessage("     §7Raison » §c" + reportReason);
                                 p.sendMessage(" ");
                                 p.sendMessage("§c=-=-=-=-=-= §4§lREPORT §c=-=-=-=-=-=");
@@ -69,6 +69,6 @@ public class Report implements CommandExecutor {
             }
         }
 
-        return false;
+        return true;
     }
 }
