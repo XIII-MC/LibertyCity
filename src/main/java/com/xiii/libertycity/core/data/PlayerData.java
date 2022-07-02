@@ -12,6 +12,8 @@ public class PlayerData implements java.io.Serializable {
 
     public boolean isBanned;
 
+    public double lastReport = 30000;
+
     public int playerID;
     public String rpPrenom;
     public String rpNom;

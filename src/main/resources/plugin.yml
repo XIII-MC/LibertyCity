@@ -36,3 +36,15 @@ commands:
     description: LibertyCity's chat command.
     usage: /chat
     permission: LibertyCity.BASIC
+  report:
+    description: LibertyCity's report command.
+    usage: /report
+    permission: LibertyCity.BASIC
+  unban:
+    description: LibertyCity's unban command.
+    usage: /unban
+    permission: LibertyCity.STAFF
+  spy:
+    description: LibertyCity's spychat command.
+    usage: /spy
+    permission: LibertyCity.STAFF

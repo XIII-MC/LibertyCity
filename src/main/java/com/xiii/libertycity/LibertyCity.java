@@ -38,6 +38,9 @@ public final class LibertyCity extends JavaPlugin {
         Bukkit.getPluginCommand("clearchat").setExecutor(new ClearChat());
         Bukkit.getPluginCommand("atm").setExecutor(new ATMGUI());
         Bukkit.getPluginCommand("chat").setExecutor(new CustomChat());
+        Bukkit.getPluginCommand("report").setExecutor(new Report());
+        Bukkit.getPluginCommand("spy").setExecutor(new SpyChat());
+        Bukkit.getPluginCommand("unban").setExecutor(new Unban());
         Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eLoading Events...");
         Bukkit.getPluginManager().registerEvents(new Events(), this);
         Bukkit.getPluginManager().registerEvents(new AnkleEvent(), this);
