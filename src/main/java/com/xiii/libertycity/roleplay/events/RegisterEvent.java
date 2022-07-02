@@ -88,7 +88,7 @@ public class RegisterEvent implements Listener {
                                 e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Votre âge RP doit être entre §e18§c et §e80§c ans.");
                             }
                         } else if(optYes.contains(e.getMessage())) {
-                            e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fOh, vous avez §e" + tempAge + " §f? Moi aussi !");
+                            e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fOh, vous avez §e" + tempAge + " ans §f? Moi aussi !");
                             String kickMessage = ("§5§l§k|||§r §fBienvenue §a" + data.rpPrenom + " §2" + data.rpNom + "§f! §5§l§k|||" + "\n" + "§d§k§l||§r §7Amusez vous bien ! §d§k§l||§r" + "\n" + " " + "\n" + "§7§oVous avez été engregistré, reconectez-vous !");
                             data.rpPrenom = tempPrenom;
                             data.rpNom = tempName;
