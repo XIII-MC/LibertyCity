@@ -1,8 +1,8 @@
 package com.xiii.libertycity.roleplay.guis;
 
 import com.xiii.libertycity.LibertyCity;
-import com.xiii.libertycity.core.data.player.Data;
-import com.xiii.libertycity.core.data.player.PlayerData;
+import com.xiii.libertycity.core.data.Data;
+import com.xiii.libertycity.core.data.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -20,7 +20,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 
-public class ATM implements Listener, CommandExecutor {
+public class ATMGUI implements Listener, CommandExecutor {
 
     Inventory gui;
 
@@ -269,6 +269,9 @@ public class ATM implements Listener, CommandExecutor {
 
             if(e.getClickedInventory().getName().equalsIgnoreCase("                 §a§lATM")) {
                 Material item = e.getCurrentItem().getType();
+                ItemStack im = e.getCurrentItem().getData().toItemStack();
+                int freeSpace = 0;
+                int money = Integer.parseInt(e.getCurrentItem().getItemMeta().getDisplayName().replaceAll("§cRetiré $", " "));
                 if(e.getRawSlot() == 35) ATM(p);
                 if(e.getRawSlot() == 10 || e.getRawSlot() == 11 || e.getRawSlot() == 12 || e.getRawSlot() == 13 || e.getRawSlot() == 14 || e.getRawSlot() == 15 || e.getRawSlot() == 16 || e.getRawSlot() == 20 || e.getRawSlot() == 21 || e.getRawSlot() == 22 || e.getRawSlot() == 23 || e.getRawSlot() == 24) {
                     if(e.getRawSlot() == 10) amount = itemCount((Player) e.getWhoClicked(), 1);
@@ -286,22 +289,58 @@ public class ATM implements Listener, CommandExecutor {
                     if(e.isRightClick()) {
                         if(amount > 0) {
                             e.getWhoClicked().getInventory().remove(item);
-                            data.rpBank += amount;
-                            depMoney += amount;
-                        }
+                            data.rpBank += (amount * money);
+                            depMoney += (amount * money);
+                        } e.getWhoClicked().sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous n'avez pas assez de billets!");
                     } else if(e.isLeftClick()) {
                         if(amount > 0) {
+                            int itemSlot = -1;
+                            for(ItemStack it : e.getWhoClicked().getInventory().getContents()) {
+                                if(it == im) {
+                                } else itemSlot++;
+                            }
                             if(amount == 1) {
                                 e.getWhoClicked().getInventory().remove(item);
                             } else if(amount > 1) {
-                                int tmpAmt = amount - 1;
-                                final ItemStack yourItem = new ItemStack(item);
-                                e.getWhoClicked().getInventory().remove(item);
-                                e.getWhoClicked().getInventory().addItem(yourItem);
+                                e.getWhoClicked().getInventory().setItem(itemSlot, new ItemStack(item, amount - 1));
                             }
                             data.rpBank += 1;
                             depMoney += 1;
-                        }
+                        } else e.getWhoClicked().sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous n'avez pas assez de billets!");
+                    }
+                }
+            }
+
+            if(e.getClickedInventory().getName().equalsIgnoreCase("                 §c§lATM")) {
+                Material item = e.getCurrentItem().getType();
+                ItemStack im = e.getCurrentItem().getData().toItemStack();
+                String mAmount = e.getCurrentItem().getItemMeta().getDisplayName();
+                int freeSpace = 0;
+                //mAmount.replace("§cRetiré $", " ");
+                int money = Integer.parseInt(mAmount);
+                if(e.getRawSlot() == 35) ATM(p);
+                if(e.getRawSlot() == 10 || e.getRawSlot() == 11 || e.getRawSlot() == 12 || e.getRawSlot() == 13 || e.getRawSlot() == 14 || e.getRawSlot() == 15 || e.getRawSlot() == 16 || e.getRawSlot() == 20 || e.getRawSlot() == 21 || e.getRawSlot() == 22 || e.getRawSlot() == 23 || e.getRawSlot() == 24) {
+                    if(e.isRightClick()) {
+                        if(data.rpBank >= (money * 10)) {
+                            for(ItemStack i : e.getWhoClicked().getInventory().getContents()) {
+                                if(i.getType() == Material.AIR) {
+                                    freeSpace++;
+                                }
+                            }
+                            if(freeSpace >= 10) {
+                                data.rpBank -= (money * 10);
+                                whdMoney += (money * 10);
+                                for (int i = 0; i < 10; i++) {
+                                    e.getWhoClicked().getInventory().addItem(im);
+                                }
+                            } else e.getWhoClicked().sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous n'avez pas assez de place dans votre inventaire!");
+                        } else e.getWhoClicked().sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous n'avez pas assez d'argent!");
+                    } else if(e.isLeftClick()) {
+                        if(data.rpBank >= money) {
+                            data.rpBank -= money;
+                            whdMoney += money;
+                            e.getWhoClicked().getInventory().addItem(im);
+                        } else e.getWhoClicked().sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous n'avez pas assez d'argent!");
                     }
                 }
             }
@@ -312,8 +351,8 @@ public class ATM implements Listener, CommandExecutor {
     @EventHandler
     public void onATMClose(InventoryCloseEvent e) {
         Bukkit.getScheduler().runTaskAsynchronously(LibertyCity.instance, () -> {
-            if(depMoney > 0) e.getPlayer().sendMessage("§fVous avez §adéposé §6" + depMoney + "§6$");
-            if(whdMoney > 0) e.getPlayer().sendMessage("§fVous avez §cretiré §6" + whdMoney + "§6$");
+            if(depMoney > 0) e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous avez §a§ndéposé §6" + depMoney + "§6$");
+            if(whdMoney > 0) e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous avez §c§nretiré §6" + whdMoney + "§6$");
             depMoney = 0;
             whdMoney = 0;
         });
