@@ -12,7 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Random;
 
-public class AnkleBreak implements Listener {
+public class AnkleEvent implements Listener {
 
     int chancePercentage = 0;
 
