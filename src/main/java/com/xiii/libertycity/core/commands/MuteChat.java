@@ -1,5 +1,8 @@
 package com.xiii.libertycity.core.commands;
 
+import com.xiii.libertycity.core.data.Data;
+import com.xiii.libertycity.core.data.PlayerData;
+import com.xiii.libertycity.core.data.ServerData;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,122 +13,150 @@ public class MuteChat implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        return false;
-    }
-
-    /*@Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(command.getName().equalsIgnoreCase("mutechat")) {
             if(sender.hasPermission("LibertyCity.mutechat.use")) {
-                ServerData sData = com.xiii.libertycity.core.data.server.Data.sData.getServerData(Bukkit.getServer());
+                ServerData server = Data.data.getServerData(Bukkit.getServer());
 
-                if(args.length == 0) {
-                    if (sData.chatStateGlobal) {
-                        sData.chatStateGlobal = false;
+                if(args.length <= 0) {
+                    if (server.chatStateGlobal) {
+                        server.chatStateGlobal = false;
                         for (Player p : Bukkit.getOnlinePlayers()) {
-                            p.hasPermission("LibertyCity.staff.alerts");
-                            p.sendMessage("§4§LSTAFF §7» §8" + sender.getName() + " §7a réduit au silence le chat.");
+                            if(p.hasPermission("LibertyCity.staff.alerts")) p.sendMessage("§4§LSTAFF §7» §8" + sender.getName() + " §7a réduit le chat §8GLOBAL§7 au silence.");
                         }
-                        Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §fLe chat a été réduit au silence.");
+                        Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §fLe chat §6Global§f a été réduit au silence.");
+                        return true;
+                    } else {
+                        server.chatStateGlobal = true;
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            if(p.hasPermission("LibertyCity.staff.alerts")) p.sendMessage("§4§LSTAFF §7» §8" + sender.getName() + " §7a déduit le chat §8GLOBAL§7 du silence.");
+                        }
+                        Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §fLe chat §6Global§f a été déduit du silence.");
                         return true;
                     }
                 } else if(args.length == 1) {
-                    String chatType = "";
-                    for(int i = 1; i < args.length; i++) {
-                        chatType += args[i] + " ";
-                    }
-                    String newStringConverted = "";
-                    newStringConverted = chatType.replace("-s", "");
+                    String newStringConverted = args[0];
                     if(newStringConverted.equalsIgnoreCase("global") || newStringConverted.equalsIgnoreCase("police") || newStringConverted.equalsIgnoreCase("gang") || newStringConverted.equalsIgnoreCase("rp") || newStringConverted.equalsIgnoreCase("hrp")) {
 
                         if(newStringConverted.equalsIgnoreCase("global")) {
-                            if (sData.chatStateGlobal) {
-                                sData.chatStateGlobal = false;
+                            if (server.chatStateGlobal) {
+                                server.chatStateGlobal = false;
                                 for (Player p : Bukkit.getOnlinePlayers()) {
                                     if(p.hasPermission("LibertyCity.staff.alerts")) p.sendMessage("§4§LSTAFF §7» §8" + sender.getName() + " §7a réduit le chat §8GLOBAL§7 au silence.");
                                 }
-                                Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §fLe chat a été réduit au silence.");
+                                Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §fLe chat §6Global§f a été réduit au silence.");
                                 return true;
                             } else {
-                                sData.chatStateGlobal = true;
+                                server.chatStateGlobal = true;
                                 for (Player p : Bukkit.getOnlinePlayers()) {
                                     if(p.hasPermission("LibertyCity.staff.alerts")) p.sendMessage("§4§LSTAFF §7» §8" + sender.getName() + " §7a déduit le chat §8GLOBAL§7 du silence.");
                                 }
-                                Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §fLe chat a été déduit du silence.");
+                                Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §fLe chat §6Global§f a été déduit du silence.");
                                 return true;
                             }
                         }
 
                         if(newStringConverted.equalsIgnoreCase("gang")) {
-                            if (sData.chatStateGang) {
-                                sData.chatStateGang = false;
+                            if (server.chatStateGang) {
+                                server.chatStateGang = false;
                                 for (Player p : Bukkit.getOnlinePlayers()) {
                                     if(p.hasPermission("LibertyCity.staff.alerts")) p.sendMessage("§4§LSTAFF §7» §8" + sender.getName() + " §7a réduit le chat §8GANG§7 au silence.");
                                 }
+                                for(Player p : Bukkit.getOnlinePlayers()) {
+                                    PlayerData data = Data.data.getUserData(p);
+                                    if(data.rpCurrentChat == 2) p.sendMessage("§2§lLiberty§a§lCity §7» §fLe chat §6Gang§f a été réduit du silence.");
+                                }
                                 return true;
                             } else {
-                                sData.chatStateGang = true;
+                                server.chatStateGang = true;
                                 for (Player p : Bukkit.getOnlinePlayers()) {
                                     if (p.hasPermission("LibertyCity.staff.alerts")) p.sendMessage("§4§LSTAFF §7» §8" + sender.getName() + " §7a déduit le chat §8GANG§7 du silence.");
+                                }
+                                for(Player p : Bukkit.getOnlinePlayers()) {
+                                    PlayerData data = Data.data.getUserData(p);
+                                    if(data.rpCurrentChat == 2) p.sendMessage("§2§lLiberty§a§lCity §7» §fLe chat §6Gang§f a été déduit du silence.");
                                 }
                                 return true;
                             }
                         }
 
                         if(newStringConverted.equalsIgnoreCase("police")) {
-                            if (sData.chatStatePolice) {
-                                sData.chatStatePolice = false;
+                            if (server.chatStatePolice) {
+                                server.chatStatePolice = false;
                                 for (Player p : Bukkit.getOnlinePlayers()) {
                                     if(p.hasPermission("LibertyCity.staff.alerts")) p.sendMessage("§4§LSTAFF §7» §8" + sender.getName() + " §7a réduit le chat §8POLICE§7 au silence.");
                                 }
+                                for(Player p : Bukkit.getOnlinePlayers()) {
+                                    PlayerData data = Data.data.getUserData(p);
+                                    if(data.rpCurrentChat == 3) p.sendMessage("§2§lLiberty§a§lCity §7» §fLe chat §6Police§f a été réduit du silence.");
+                                }
                                 return true;
                             } else {
-                                sData.chatStatePolice = true;
+                                server.chatStatePolice = true;
                                 for (Player p : Bukkit.getOnlinePlayers()) {
                                     if(p.hasPermission("LibertyCity.staff.alerts")) p.sendMessage("§4§LSTAFF §7» §8" + sender.getName() + " §7a déduit le chat §8POLICE§7 du silence.");
+                                }
+                                for(Player p : Bukkit.getOnlinePlayers()) {
+                                    PlayerData data = Data.data.getUserData(p);
+                                    if(data.rpCurrentChat == 3) p.sendMessage("§2§lLiberty§a§lCity §7» §fLe chat §6Police§f a été déduit du silence.");
                                 }
                                 return true;
                             }
                         }
 
                         if(newStringConverted.equalsIgnoreCase("rp")) {
-                            if (sData.chatStateRP) {
-                                sData.chatStateRP = false;
+                            if (server.chatStateRP) {
+                                server.chatStateRP = false;
                                 for (Player p : Bukkit.getOnlinePlayers()) {
                                     if(p.hasPermission("LibertyCity.staff.alerts")) p.sendMessage("§4§LSTAFF §7» §8" + sender.getName() + " §7a réduit le chat §8RP§7 au silence.");
                                 }
+                                for(Player p : Bukkit.getOnlinePlayers()) {
+                                    PlayerData data = Data.data.getUserData(p);
+                                    if(data.rpCurrentChat == 1) p.sendMessage("§2§lLiberty§a§lCity §7» §fLe chat §6RP§f a été réduit du silence.");
+                                }
                                 return true;
                             } else {
-                                sData.chatStateRP = true;
+                                server.chatStateRP = true;
                                 for (Player p : Bukkit.getOnlinePlayers()) {
                                     if(p.hasPermission("LibertyCity.staff.alerts")) p.sendMessage("§4§LSTAFF §7» §8" + sender.getName() + " §7a déduit le chat §8RP§7 du silence.");
+                                }
+                                for(Player p : Bukkit.getOnlinePlayers()) {
+                                    PlayerData data = Data.data.getUserData(p);
+                                    if(data.rpCurrentChat == 1) p.sendMessage("§2§lLiberty§a§lCity §7» §fLe chat §6RP§f a été déduit du silence.");
                                 }
                                 return true;
                             }
                         }
 
                         if(newStringConverted.equalsIgnoreCase("hrp")) {
-                            if (sData.chatStateHRP) {
-                                sData.chatStateHRP = false;
+                            if (server.chatStateHRP) {
+                                server.chatStateHRP = false;
                                 for (Player p : Bukkit.getOnlinePlayers()) {
                                     if(p.hasPermission("LibertyCity.staff.alerts")) p.sendMessage("§4§LSTAFF §7» §8" + sender.getName() + " §7a réduit le chat §8HRP§7 au silence.");
                                 }
+                                for(Player p : Bukkit.getOnlinePlayers()) {
+                                    PlayerData data = Data.data.getUserData(p);
+                                    if(data.rpCurrentChat == 0) p.sendMessage("§2§lLiberty§a§lCity §7» §fLe chat §6HRP§f a été réduit du silence.");
+                                }
                                 return true;
                             } else {
-                                sData.chatStateHRP = true;
+                                server.chatStateHRP = true;
                                 for (Player p : Bukkit.getOnlinePlayers()) {
                                     if(p.hasPermission("LibertyCity.staff.alerts")) p.sendMessage("§4§LSTAFF §7» §8" + sender.getName() + " §7a déduit le chat §8HRP§7 du silence.");
+                                }
+                                for(Player p : Bukkit.getOnlinePlayers()) {
+                                    PlayerData data = Data.data.getUserData(p);
+                                    if(data.rpCurrentChat == 0) p.sendMessage("§2§lLiberty§a§lCity §7» §fLe chat §6HRP§f a été déduit du silence.");
                                 }
                                 return true;
                             }
                         }
 
                     } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Ce chat n'existe pas !");
-                } else sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Trop d'arguments !");
+                } else if(args.length > 1) sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Trop d'arguments !");
 
 
             } else if(sender instanceof Player) sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission insufisante.");
         }
-        return false;
-    }*/
+    return false;
+    }
 }
