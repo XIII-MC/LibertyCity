@@ -1,16 +1,17 @@
 package com.xiii.libertycity;
 
-import com.xiii.libertycity.core.CustomChat;
 import com.xiii.libertycity.core.Events;
 import com.xiii.libertycity.core.commands.*;
-import com.xiii.libertycity.core.data.player.Data;
-import com.xiii.libertycity.core.utils.FileUtility;
-import com.xiii.libertycity.roleplay.events.AnkleBreak;
-import com.xiii.libertycity.roleplay.events.Death;
-import com.xiii.libertycity.roleplay.events.RegisterAccount;
-import com.xiii.libertycity.roleplay.guis.ATM;
-import com.xiii.libertycity.roleplay.guis.Bin;
-import com.xiii.libertycity.roleplay.items.SearchTool;
+import com.xiii.libertycity.core.data.Data;
+import com.xiii.libertycity.core.data.PlayerData;
+import com.xiii.libertycity.core.utils.FileUtil;
+import com.xiii.libertycity.roleplay.CustomChat;
+import com.xiii.libertycity.roleplay.events.AnkleEvent;
+import com.xiii.libertycity.roleplay.events.DeathEvent;
+import com.xiii.libertycity.roleplay.events.RegisterEvent;
+import com.xiii.libertycity.roleplay.guis.ATMGUI;
+import com.xiii.libertycity.roleplay.guis.BinGUI;
+import com.xiii.libertycity.roleplay.items.SearchItem;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -35,36 +36,74 @@ public final class LibertyCity extends JavaPlugin {
         Bukkit.getPluginCommand("mutechat").setExecutor(new MuteChat());
         Bukkit.getPluginCommand("cooldownchat").setExecutor(new CooldownChat());
         Bukkit.getPluginCommand("clearchat").setExecutor(new ClearChat());
-        Bukkit.getPluginCommand("atm").setExecutor(new ATM());
+        Bukkit.getPluginCommand("atm").setExecutor(new ATMGUI());
+        Bukkit.getPluginCommand("chat").setExecutor(new CustomChat());
         Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eLoading Events...");
         Bukkit.getPluginManager().registerEvents(new Events(), this);
-        Bukkit.getPluginManager().registerEvents(new AnkleBreak(), this);
+        Bukkit.getPluginManager().registerEvents(new AnkleEvent(), this);
         Bukkit.getPluginManager().registerEvents(new CustomChat(), this);
-        Bukkit.getPluginManager().registerEvents(new Death(), this);
-        Bukkit.getPluginManager().registerEvents(new RegisterAccount(), this);
-        Bukkit.getPluginManager().registerEvents(new SearchTool(), this);
-        Bukkit.getPluginManager().registerEvents(new ATM(), this);
-        Bukkit.getPluginManager().registerEvents(new Bin(), this);
-        Bukkit.getPluginManager().registerEvents(new com.xiii.libertycity.test.events.Events(), this);
-        Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eReading YML DataBase...");
-        FileUtility.readPlayerDatas();
+        Bukkit.getPluginManager().registerEvents(new DeathEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new RegisterEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new SearchItem(), this);
+        Bukkit.getPluginManager().registerEvents(new ATMGUI(), this);
+        Bukkit.getPluginManager().registerEvents(new BinGUI(), this);
+        Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eReading YML DataBase (PDB)...");
+        FileUtil.readPlayerDatas();
+        Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eReading YML DataBase (SDB)...");
+        FileUtil.readServerDatas();
+        Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eRegistering Server towards ServerData...");
+        Data.data.registerServer(Bukkit.getServer());
         Bukkit.getConsoleSender().sendMessage("§7[§2§lLiberty§a§lCity§7] §aPlugin activé !");
-        Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eAuto-YML DataBase writing is now enabled (15s)...");
+
+        Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eAuto-Clearlag is now enabled (300s)...");
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §FLes éboueurs ramasseront tout les déchets dans §630 seconde§f!"),270*20, 270*20);
+
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §FLes éboueurs ramasseront tout les déchets dans §610 seconde§f!"),300*20, 300*20);
+
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "clearlag"),310*20, 310*20);
+
+        Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eAuto-MoneyHelp is now enabled (600)...");
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
             for(Player p : Bukkit.getOnlinePlayers()) {
-                FileUtility.savePlayerData(Data.data.getUserData(p));
+                PlayerData data = Data.data.getUserData(p);
+                data.rpBank += 10;
+                p.sendMessage("§8§M+---------------------------------------+");
+                p.sendMessage("§2§lLiberty§a§lCity §7» §fVous avez reçu §e10$ §7(Aide de l'Etat)");
+                p.sendMessage("§8§M+---------------------------------------+");
+            }
+        },600*20, 600*20);
+
+        Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eAuto-Broadcast is now enabled (1800s)...");
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
+            Bukkit.broadcastMessage("§8§M+---------------------------------------+");
+            Bukkit.broadcastMessage("§e                      §8[§a§lINFORMATION§8]§e                      ");
+            Bukkit.broadcastMessage("§8» §fUne question, un problème ? Utiliser §e/helpop §f!");
+            Bukkit.broadcastMessage("§8» §fUn FreeKill, joueur non RP ? Utiliser §e/report <Joueur> <Raison>");
+            Bukkit.broadcastMessage("§8» §fNous recrutons du Staff !");
+            Bukkit.broadcastMessage("§8§M+---------------------------------------+");
+        },1800*20, 1800*20);
+
+        Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eAuto-YML DataBase (PDB) writing is now enabled (15s)...");
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
+            for(Player p : Bukkit.getOnlinePlayers()) {
+                FileUtil.savePlayerData(Data.data.getUserData(p));
             }
         },15*20, 15*20);
+
+        Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eAuto-YML DataBase (SDB) writing is now enabled (1s)...");
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> FileUtil.saveServerDatas(Data.data.getServerData(Bukkit.getServer())), 20, 20);
     }
 
     @Override
     public void onDisable() {
         Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eCanceling Tasks...");
         Bukkit.getScheduler().cancelTasks(this);
-        Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eWriting YML DataBase...");
+        Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eWriting YML DataBase (PDB)...");
         for(Player p : Bukkit.getOnlinePlayers()) {
-            FileUtility.savePlayerData(Data.data.getUserData(p));
+            FileUtil.savePlayerData(Data.data.getUserData(p));
         }
+        Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eWriting YML DataBase (SDB)...");
+        FileUtil.saveServerDatas(Data.data.getServerData(Bukkit.getServer()));
         Bukkit.getConsoleSender().sendMessage("§7[§2§lLiberty§a§lCity§7] §cPlugin désactivé !");
     }
 }

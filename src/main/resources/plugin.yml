@@ -29,6 +29,10 @@ commands:
     usage: /clearchat
     permission: LibertyCity.STAFF
   atm:
-    description: LibertyCity's atm command.
+    description: LibertyCity's ATM command.
     usage: /atm
     permission: LibertyCity.DEBUG
+  chat:
+    description: LibertyCity's chat command.
+    usage: /chat
+    permission: LibertyCity.BASIC
