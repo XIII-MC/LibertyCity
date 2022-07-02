@@ -1,8 +1,10 @@
 package com.xiii.libertycity.roleplay.events;
 
 import com.xiii.libertycity.LibertyCity;
-import com.xiii.libertycity.core.data.player.Data;
-import com.xiii.libertycity.core.data.player.PlayerData;
+import com.xiii.libertycity.core.data.Data;
+import com.xiii.libertycity.core.data.PlayerData;
+import com.xiii.libertycity.core.data.ServerData;
+import com.xiii.libertycity.core.utils.TimeUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class RegisterAccount implements Listener {
+public class RegisterEvent implements Listener {
 
     ArrayList<String> dbRPNom = new ArrayList<>();
     ArrayList<String> dbRPPrenom = new ArrayList<>();
@@ -24,31 +26,28 @@ public class RegisterAccount implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onMove(PlayerMoveEvent e) {
         PlayerData data = Data.data.getUserData(e.getPlayer());
-        if(data.playerID == -1) {
-            e.getPlayer().sendMessage("slAYED");
-            e.setCancelled(true);
-        }
+        if(data.playerID <= 0) e.setCancelled(true);
     }
 
     @EventHandler
     public void commandChecker(PlayerCommandPreprocessEvent e) {
         PlayerData data = Data.data.getUserData(e.getPlayer());
 
-        //if(data.playerID == -1) e.setCancelled(true);
+        if(data.playerID <= 0) e.setCancelled(true);
 
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler
     public void forRegister(PlayerJoinEvent e) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(LibertyCity.instance, () -> {
             PlayerData data = Data.data.getUserData(e.getPlayer());
 
-            e.getPlayer().sendTitle("§§§l§k|||§r §fBienvenue sur §2§lLiberty§a§lCity §6§lV5 §f! §4§l§k|||", "§6§k§l||§r §7Commencer par écrire votre §e§nPrénom RP§r §6§k§l||", 0, 14000, 0);
-            if(data.playerID == -1) {
+            if(data.playerID <= 0) {
+                e.getPlayer().sendTitle("§§§l§k|||§r §fBienvenue sur §2§lLiberty§a§lCity §6§lV5 §f! §4§l§k|||", "§6§k§l||§r §7Commencer par écrire votre §e§nPrénom RP§r §6§k§l||", 0, 14000, 0);
             } else {
-                if(data.rpBank == -1) {
-                    data.rpBank = 0;
+                if (data.joinDate == null) {
                     Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §a" + data.rpPrenom + " §2" + data.rpNom + " §f rejoint la ville !");
+                    data.joinDate = TimeUtil.getDate();
                 }
             }
 
@@ -64,18 +63,19 @@ public class RegisterAccount implements Listener {
     boolean confirmWait2;
     boolean confirmWait3;
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler
     public void forChatRegister(AsyncPlayerChatEvent e) {
         PlayerData tdt = Data.data.getUserData(e.getPlayer());
-        if(tdt.playerID == -1) e.setCancelled(true);
+        if(tdt.playerID <= 0) e.setCancelled(true);
         Bukkit.getScheduler().runTaskAsynchronously(LibertyCity.instance, () -> {
 
             PlayerData data = Data.data.getUserData(e.getPlayer());
+            ServerData server = Data.data.getServerData(Bukkit.getServer());
             List<String> optYes = Arrays.asList("yes", "oui", "o", "y", "Yes", "Oui", "O", "Y", "Yas", "yas", "ye", "Ye", "Ya", "ya");
             List<String> optNo = Arrays.asList("no", "non", "n", "annule", "cancel", "nah", "Non", "No", "N", "Nah");
             //List<String> remCara = Arrays.asList(",", "?", ";", ".", ":", "/", "!", "^", "¨", "$", "£", "¤", "ù", "%", "*", "µ", ")", "=", "+", "}", "°", "]", "~", "'", "{", "(", "[", "-", "|", "`", "_", "@", "²", "&", "<", ">", "#");
 
-            if(data.playerID == -1) {
+            if(data.playerID <= 0) {
                 if(data.rpPrenom != null) {
                     if(data.rpNom != null) {
                         if(!confirmWait3) {
@@ -89,25 +89,19 @@ public class RegisterAccount implements Listener {
                             }
                         } else if(optYes.contains(e.getMessage())) {
                             e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fOh, vous avez §e" + tempAge + " §f? Moi aussi !");
-                            data.rpAge = tempAge;
-                            e.getPlayer().sendTitle("§4§l§k|||§r §fBonjour §a" + data.rpPrenom + " §2" + data.rpNom + "§f! §4§l§k|||", "§6§k§l||§r §7Nous finissons votre carte d'identité §6§k§l||", 0, 14000, 0);
                             String kickMessage = ("§5§l§k|||§r §fBienvenue §a" + data.rpPrenom + " §2" + data.rpNom + "§f! §5§l§k|||" + "\n" + "§d§k§l||§r §7Amusez vous bien ! §d§k§l||§r" + "\n" + " " + "\n" + "§7§oVous avez été engregistré, reconectez-vous !");
-                            while(data.tempvarjoin) {
-                                if(data.timerUtility.isDelayComplete(3000)) {
-                                    data.timerUtility.reset();
-                                    data.tempvarjoin = false;
-                                }
-                            }
-                            e.getPlayer().kickPlayer(kickMessage);
                             data.rpPrenom = tempPrenom;
                             data.rpNom = tempName;
                             data.rpAge = tempAge;
-                            if(data.globalID <= 0) data.globalID = 1;
-                            data.playerID = data.globalID;
-                            data.globalID++;
+                            data.rpCurrentChat = 0;
+                            data.rpCurrentJob = "§eCitoyen";
+                            if(server.globalID <= 0) server.globalID = 1;
+                            data.playerID = server.globalID;
+                            server.globalID++;
                             dbRPNom.add(tempName);
                             dbRPPrenom.add(data.rpPrenom);
                             data.isVerified = true;
+                            e.getPlayer().kickPlayer(kickMessage);
                         } else if(optNo.contains(e.getMessage())) {
                             e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fAh! Veuillez re-écrire votre §eÂge RP");
                             confirmWait3 = false;
