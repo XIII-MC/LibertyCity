@@ -39,7 +39,7 @@ public class Vanish implements CommandExecutor, Listener {
             }
         }
 
-        return false;
+        return true;
     }
 
     @EventHandler
