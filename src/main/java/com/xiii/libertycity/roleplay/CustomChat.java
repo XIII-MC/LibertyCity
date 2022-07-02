@@ -96,7 +96,7 @@ public class CustomChat implements Listener, CommandExecutor {
 
                 PlayerData data = Data.data.getUserData((Player) sender);
 
-                if(Arrays.toString(args).equalsIgnoreCase("hrp")) {
+                if(args[0].equalsIgnoreCase("hrp")) {
                     if(data.rpCurrentChat == 0) {
                         sender.sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous êtes déja sur le chat HRP");
                         return true;
@@ -105,7 +105,7 @@ public class CustomChat implements Listener, CommandExecutor {
                         sender.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais sur le chat §6HRP");
                         return true;
                     }
-                } else if(Arrays.toString(args).equalsIgnoreCase("rp")) {
+                } else if(args[0].equalsIgnoreCase("rp")) {
                     if(data.rpCurrentChat == 1) {
                         sender.sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous êtes déja sur le chat RP");
                         return true;
@@ -114,7 +114,7 @@ public class CustomChat implements Listener, CommandExecutor {
                         sender.sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes désormais sur le chat §6RP");
                         return true;
                     }
-                } else if(Arrays.toString(args).equalsIgnoreCase("police")) {
+                } else if(args[0].equalsIgnoreCase("police")) {
                     if(data.rpCurrentJob == "§bPolice") {
                         if (data.rpCurrentChat == 2) {
                             sender.sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous êtes déja sur le chat Police");
@@ -128,7 +128,7 @@ public class CustomChat implements Listener, CommandExecutor {
                         sender.sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous n'êtes pas de la Police");
                         return true;
                     }
-                } else if(Arrays.toString(args).equalsIgnoreCase("gang")) {
+                } else if(args[0].equalsIgnoreCase("gang")) {
                     if(data.rpCurrentJob == "§4Gang") {
                         if (data.rpCurrentChat == 3) {
                             sender.sendMessage("§2§lLiberty§a§lCity §7» §cAttention! Vous êtes déja sur le chat Gang");
