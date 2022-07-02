@@ -48,3 +48,27 @@ commands:
     description: LibertyCity's spychat command.
     usage: /spy
     permission: LibertyCity.STAFF
+  gm:
+    description: LibertyCity's gamemode command.
+    usage: /gm
+    permission: LibertyCity.STAFF
+  gamemode:
+    description: LibertyCity's gamemode command.
+    usage: /gamemode
+    permission: LibertyCity.STAFF
+  gms:
+    description: LibertyCity's survival gamemode command.
+    usage: /gms
+    permission: LibertyCity.STAFF
+  gma:
+    description: LibertyCity's adventure gamemode command.
+    usage: /gma
+    permission: LibertyCity.STAFF
+  gmc:
+    description: LibertyCity's creative gamemode command.
+    usage: /gmc
+    permission: LibertyCity.STAFF
+  gmsp:
+    description: LibertyCity's spectator gamemode command.
+    usage: /gmsp
+    permission: LibertyCity.STAFF

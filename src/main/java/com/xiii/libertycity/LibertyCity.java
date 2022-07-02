@@ -41,6 +41,12 @@ public final class LibertyCity extends JavaPlugin {
         Bukkit.getPluginCommand("report").setExecutor(new Report());
         Bukkit.getPluginCommand("spy").setExecutor(new SpyChat());
         Bukkit.getPluginCommand("unban").setExecutor(new Unban());
+        Bukkit.getPluginCommand("gm").setExecutor(new Gamemode());
+        Bukkit.getPluginCommand("gamemode").setExecutor(new Gamemode());
+        Bukkit.getPluginCommand("gma").setExecutor(new Gamemode.GMA());
+        Bukkit.getPluginCommand("gms").setExecutor(new Gamemode.GMS());
+        Bukkit.getPluginCommand("gmc").setExecutor(new Gamemode.GMC());
+        Bukkit.getPluginCommand("gmsp").setExecutor(new Gamemode.GMSP());
         Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eLoading Events...");
         Bukkit.getPluginManager().registerEvents(new Events(), this);
         Bukkit.getPluginManager().registerEvents(new AnkleEvent(), this);
