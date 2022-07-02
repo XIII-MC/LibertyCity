@@ -13,7 +13,8 @@ public class TimeSet implements CommandExecutor {
 
         if(command.getName().equalsIgnoreCase("day")) {
             if(sender.hasPermission("LibertyCity.time.day")) {
-                Bukkit.getPlayer(String.valueOf(sender)).getWorld().setFullTime(0);
+                Player player = (Player) sender;
+                player.getWorld().setTime(1000);
                 sender.sendMessage("§2§lLiberty§a§lCity §7» §fHeure mise à §eJour");
                 for(Player p : Bukkit.getOnlinePlayers()) {
                     if(p.hasPermission("LibertyCity.staff")) {
@@ -25,7 +26,8 @@ public class TimeSet implements CommandExecutor {
 
         if(command.getName().equalsIgnoreCase("night")) {
             if(sender.hasPermission("LibertyCity.time.night")) {
-                Bukkit.getPlayer(String.valueOf(sender)).getWorld().setFullTime(12000);
+                Player player = (Player) sender;
+                player.getWorld().setTime(13000);
                 sender.sendMessage("§2§lLiberty§a§lCity §7» §fHeure mise à §eNuit");
                 for(Player p : Bukkit.getOnlinePlayers()) {
                     if(p.hasPermission("LibertyCity.staff")) {
@@ -35,6 +37,6 @@ public class TimeSet implements CommandExecutor {
             }
         }
 
-        return false;
+        return true;
     }
 }
