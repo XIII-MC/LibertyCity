@@ -28,7 +28,7 @@ public class ClearLag implements CommandExecutor {
                         current.remove();
                     }
                 }
-                if(sender instanceof Player) sender.sendMessage("§2§lLiberty§a§lCity §7» §6" + cItemsAmount + " §fentitées retirées.");
+                Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §FLes éboueurs ont ramasser §6" + cItemsAmount + " §fdéchets");
                 return true;
             }
         } else if(sender instanceof Player) sender.sendMessage("§2§lLiberty§a§lCity §7» §cPermission insufisante.");
