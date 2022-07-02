@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
-public class Bin implements Listener {
+public class BinGUI implements Listener {
 
     @EventHandler
     public void onBinInteract(PlayerInteractEvent e) {
