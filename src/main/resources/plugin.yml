@@ -116,3 +116,7 @@ commands:
     description: LibertyCity's vanish command.
     usage: /vanish
     permission: LibertyCity.STAFF
+  mute:
+    description: LibertyCity's mute command.
+    usage: /mute
+    permission: LibertyCity.STAFF

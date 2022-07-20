@@ -60,6 +60,7 @@ public final class LibertyCity extends JavaPlugin {
         Bukkit.getPluginCommand("night").setExecutor(new TimeSet());
         Bukkit.getPluginCommand("vanish").setExecutor(new Vanish());
         Bukkit.getPluginCommand("v").setExecutor(new Vanish());
+        Bukkit.getPluginCommand("mute").setExecutor(new Mute());
         Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eLoading Events...");
         Bukkit.getPluginManager().registerEvents(new Events(), this);
         Bukkit.getPluginManager().registerEvents(new AnkleEvent(), this);
@@ -76,6 +77,8 @@ public final class LibertyCity extends JavaPlugin {
         FileUtil.readServerDatas();
         Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eRegistering Server towards ServerData...");
         Data.data.registerServer(Bukkit.getServer());
+        Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eLoading PacketEvents...");
+        Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§1§LCity§7] §cPacketEvents not found. Switched to [LAC]");
         Bukkit.getConsoleSender().sendMessage("§7[§2§lLiberty§a§lCity§7] §aPlugin activé !");
 
         Bukkit.getConsoleSender().sendMessage("§7[§2§LLiberty§A§LCity§7] §eAuto-Clearlag is now enabled (300s)...");
