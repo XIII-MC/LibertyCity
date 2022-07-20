@@ -10,11 +10,12 @@ Finish:
 
 - ATMGUI
 - SearchTool
+- Scoreboard
+- TAB
 
 Fix:
 
-- /day
-- /night
+- TAB
 
 Test:
 
