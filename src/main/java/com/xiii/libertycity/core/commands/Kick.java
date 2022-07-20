@@ -24,7 +24,7 @@ public class Kick implements CommandExecutor {
                     } else {
                         if (args.length == 1) {
                             target.kickPlayer("§7§m---------------§r§2§lLiberty§a§lCity§r§7§m---------------" + "\n" + "§cVous avez été explusé(e) du serveur!" + "\n" + " " + "\n" + "§7Raison: §eNon Spécifiée." + "\n" + "§7Temps restant: §cAucun." + "\n" + " " + "\n" + "§bPour contester cette sanction, veuillez utiliser le Discord:" + "\n" + "§4§nSanction non-contestable." + "\n" + "§7§m----------------------------------------");
-                            Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §c" + target.getName() + " §fa été explusé du serveur par §c" + sender.getName());
+                            Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §c" + target.getName() + " §fa été explusé du serveur");
                             //Bukkit.getConsoleSender().sendMessage("[LOG] " + sender.getName() + ": /kick " + target.getName());
                             return true;
                         } else if (args.length > 1) {
@@ -58,7 +58,7 @@ public class Kick implements CommandExecutor {
                                 if (args.length > 1) {
                                     target.kickPlayer("§7§m---------------§r§2§lLiberty§a§lCity§r§7§m---------------" + "\n" + "§cVous avez été explusé(e) du serveur!" + "\n" + " " + "\n" + "§7Raison: §e" + newStringConverted + "\n" + "§7Temps restant: §cAucun." + "\n" + " " + "\n" + "§bPour contester cette sanction, veuillez utiliser le Discord:" + "\n" + "§4§nSanction non-contestable." + "\n" + "§7§m----------------------------------------");
                                     sender.sendMessage("§2§lLiberty§a§lCity §7» §e" + target.getName() + " §fa été explusé du serveur, §c" + newStringConverted);
-                                    Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §c" + target.getName() + " §fa été explusé du serveur par §c" + sender.getName() + "§f, " + newStringConverted);
+                                    Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §c" + target.getName() + " §fa été explusé du serveur par §f, §c" + newStringConverted);
                                     //Bukkit.getConsoleSender().sendMessage("[LOG] " + player + ": /kick " + target.getName());
                                     return true;
                                 }
