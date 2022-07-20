@@ -14,73 +14,107 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import java.util.Arrays;
-
 public class CustomChat implements Listener, CommandExecutor {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onChat(AsyncPlayerChatEvent e) {
+        PlayerData d = Data.data.getUserData(e.getPlayer());
+        if(d.playerID <= 0) return;
         e.setCancelled(true);
         Bukkit.getScheduler().runTaskAsynchronously(LibertyCity.instance, () -> {
 
             PlayerData data = Data.data.getUserData(e.getPlayer());
             ServerData server = Data.data.getServerData(Bukkit.getServer());
 
-            if(data.rpCurrentChat == 0) {
-                if(!data.chatBanHRP && !data.chatBanGlobal) {
-                    if(server.chatStateGlobal || server.chatStateHRP) {
-                        for (Player p : Bukkit.getOnlinePlayers()) {
-                            PlayerData temp = Data.data.getUserData(p);
-                            if (temp.rpCurrentChat == 0)
-                                p.sendMessage("§7(§3§LHRP§7) §A§L" + temp.rpPrenom + " §2§L" + temp.rpNom + " §8| §e" + p.getName() + " §7» §f" + e.getMessage());
-                            if (temp.spyChatHRP || temp.spyChatGlobal)
-                                p.sendMessage("§C§L[CS] §7(§3§LHRP§7) §A§L" + temp.rpPrenom + " §2§L" + temp.rpNom + " §8| §e" + p.getName() + " §7» §f" + e.getMessage());
+            if(data.isMuted) {
+                if(data.muteDuration <= 0) {
+                    if(data.muteReason != null) {
+                        e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous avez été rendu muet pour une durée §cindéterminé§f le §c" + data.muteTime + "§f, raison, §c" + data.muteReason);
+                        return;
+                    } else {
+                        e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous avez été rendu muet pour une durée §cindéterminé§f le §c" + data.muteTime);
+                        return;
+                    }
+                } else {
+                    if(data.muteCalc - System.currentTimeMillis() >= data.muteDuration) {
+                        e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous avez retrouver la parole.");
+                        data.isMuted = false;
+                    } else {
+                        if(data.muteReason != null) {
+                            e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes encore muet pour §c" + data.muteLeft + "§f, raison, §c" + data.muteReason);
+                            return;
+                        } else {
+                            e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §fVous êtes encore muet pour §c" + data.muteLeft);
+                            return;
                         }
-                    } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Le chat est réduit au silence");
-                } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous êtes banni du chat HRP");
+                    }
+                }
             }
 
-            if(data.rpCurrentChat == 1) {
-                if(!data.chatBanRP && !data.chatBanGlobal) {
-                    if(server.chatStateGlobal || server.chatStateRP) {
-                        for (Player p : Bukkit.getOnlinePlayers()) {
-                            PlayerData temp = Data.data.getUserData(p);
-                            if (temp.rpCurrentChat == 1)
-                                p.sendMessage("§7(§2§LRP§7) §f" + temp.rpCurrentJob + " §8| §A§L" + temp.rpPrenom + " §2§L" + temp.rpNom + " §7» §f" + e.getMessage());
-                            if (temp.spyChatRP || temp.spyChatGlobal)
-                                p.sendMessage("§C§L[CS] §7(§2§LRP§7) §f" + temp.rpCurrentJob + " §8| §A§L" + temp.rpPrenom + " §2§L" + temp.rpNom + " §7» §f" + e.getMessage());
-                        }
-                    } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Le chat est réduit au silence");
-                } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous êtes banni du chat RP");
+            if(System.currentTimeMillis() - data.lastChat >= server.chatCooldownGlobal) {
+                if (data.rpCurrentChat == 0) {
+                    if (!data.chatBanHRP && !data.chatBanGlobal) {
+                        if (server.chatStateGlobal || server.chatStateHRP) {
+                            for (Player p : Bukkit.getOnlinePlayers()) {
+                                PlayerData temp = Data.data.getUserData(p);
+                                if (temp.rpCurrentChat == 0)
+                                    p.sendMessage("§7(§3§LHRP§7) §A§L" + temp.rpPrenom + " §2§L" + temp.rpNom + " §8| §e" + p.getName() + " §7» §f" + e.getMessage());
+                                if (temp.spyChatHRP || temp.spyChatGlobal)
+                                    p.sendMessage("§C§L[CS] §7(§3§LHRP§7) §A§L" + temp.rpPrenom + " §2§L" + temp.rpNom + " §8| §e" + p.getName() + " §7» §f" + e.getMessage());
+                            }
+                        } else
+                            e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Le chat est réduit au silence");
+                    } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous êtes banni du chat HRP");
+                }
+
+                if (data.rpCurrentChat == 1) {
+                    if (!data.chatBanRP && !data.chatBanGlobal) {
+                        if (server.chatStateGlobal || server.chatStateRP) {
+                            for (Player p : Bukkit.getOnlinePlayers()) {
+                                PlayerData temp = Data.data.getUserData(p);
+                                if (temp.rpCurrentChat == 1)
+                                    p.sendMessage("§7(§2§LRP§7) §f" + temp.rpCurrentJob + " §8| §A§L" + temp.rpPrenom + " §2§L" + temp.rpNom + " §7» §f" + e.getMessage());
+                                if (temp.spyChatRP || temp.spyChatGlobal)
+                                    p.sendMessage("§C§L[CS] §7(§2§LRP§7) §f" + temp.rpCurrentJob + " §8| §A§L" + temp.rpPrenom + " §2§L" + temp.rpNom + " §7» §f" + e.getMessage());
+                            }
+                        } else
+                            e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Le chat est réduit au silence");
+                    } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous êtes banni du chat RP");
+                }
+
+                if (data.rpCurrentChat == 3) {
+                    if (!data.chatBanGang && !data.chatBanGlobal) {
+                        if (server.chatStateGlobal || server.chatStateGang) {
+                            for (Player p : Bukkit.getOnlinePlayers()) {
+                                PlayerData temp = Data.data.getUserData(p);
+                                if (temp.rpCurrentChat == 3)
+                                    p.sendMessage("§7(§4§LGang§7) §f" + temp.rpGangRank + " §8| §A§L" + temp.rpPrenom + " §2§L" + temp.rpNom + " §7» §f" + e.getMessage());
+                                if (temp.spyChatGang || temp.spyChatGlobal)
+                                    p.sendMessage("§C§L[CS] §7(§4§LGang§7) §f" + temp.rpGangRank + " §8| §A§L" + temp.rpPrenom + " §2§L" + temp.rpNom + " §7» §f" + e.getMessage());
+                            }
+                        } else
+                            e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Le chat est réduit au silence");
+                    } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous êtes banni du chat Gang");
+                }
+
+                if (data.rpCurrentChat == 2) {
+                    if (!data.chatBanPolice && !data.chatBanGlobal) {
+                        if (server.chatStateGlobal || server.chatStatePolice) {
+                            for (Player p : Bukkit.getOnlinePlayers()) {
+                                PlayerData temp = Data.data.getUserData(p);
+                                if (temp.rpCurrentChat == 2)
+                                    p.sendMessage("§7(§b§LPolice§7) §f" + temp.rpPoliceRank + " §8| §A§L" + temp.rpPrenom + " §2§L" + temp.rpNom + " §7» §f" + e.getMessage());
+                                if (temp.spyChatPolice || temp.spyChatGlobal)
+                                    p.sendMessage("§C§L[CS] §7(§b§LPolice§7) §f" + temp.rpPoliceRank + " §8| §A§L" + temp.rpPrenom + " §2§L" + temp.rpNom + " §7» §f" + e.getMessage());
+                            }
+                        } else
+                            e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Le chat est réduit au silence");
+                    } else
+                        e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous êtes banni du chat Police");
+                }
             }
 
-            if(data.rpCurrentChat == 3) {
-                if(!data.chatBanGang && !data.chatBanGlobal) {
-                    if(server.chatStateGlobal || server.chatStateGang) {
-                        for (Player p : Bukkit.getOnlinePlayers()) {
-                            PlayerData temp = Data.data.getUserData(p);
-                            if (temp.rpCurrentChat == 3)
-                                p.sendMessage("§7(§4§LGang§7) §f" + temp.rpGangRank + " §8| §A§L" + temp.rpPrenom + " §2§L" + temp.rpNom + " §7» §f" + e.getMessage());
-                            if (temp.spyChatGang || temp.spyChatGlobal)
-                                p.sendMessage("§C§L[CS] §7(§4§LGang§7) §f" + temp.rpGangRank + " §8| §A§L" + temp.rpPrenom + " §2§L" + temp.rpNom + " §7» §f" + e.getMessage());
-                        }
-                    } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Le chat est réduit au silence");
-                } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous êtes banni du chat Gang");
-            }
-
-            if(data.rpCurrentChat == 2) {
-                if(!data.chatBanPolice && !data.chatBanGlobal) {
-                    if(server.chatStateGlobal || server.chatStatePolice) {
-                        for (Player p : Bukkit.getOnlinePlayers()) {
-                            PlayerData temp = Data.data.getUserData(p);
-                            if (temp.rpCurrentChat == 2)
-                                p.sendMessage("§7(§b§LPolice§7) §f" + temp.rpPoliceRank + " §8| §A§L" + temp.rpPrenom + " §2§L" + temp.rpNom + " §7» §f" + e.getMessage());
-                            if (temp.spyChatPolice || temp.spyChatGlobal)
-                                p.sendMessage("§C§L[CS] §7(§b§LPolice§7) §f" + temp.rpPoliceRank + " §8| §A§L" + temp.rpPrenom + " §2§L" + temp.rpNom + " §7» §f" + e.getMessage());
-                        }
-                    } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Le chat est réduit au silence");
-                } else e.getPlayer().sendMessage("§2§lLiberty§a§lCity §7» §cErreur! Vous êtes banni du chat Police");
-            }
+            data.lastChat = System.currentTimeMillis();
 
         });
     }
