@@ -32,7 +32,7 @@ public class Unban implements CommandExecutor {
                     if (args.length == 1) {
                         if (data.isBanned) {
                             data.isBanned = false;
-                            Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §c" + target.getName() + " §fa été débanni par §c" + sender.getName());
+                            Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §c" + target.getName() + " §fa été débanni");
                             for (Player p : Bukkit.getOnlinePlayers()) {
                                 if (p.hasPermission("LibertyCity.staff.alerts"))
                                     p.sendMessage("§4LSTAFF §7» §8" + target.getName() + " §7a été débanni par §8" + sender.getName());
@@ -75,7 +75,7 @@ public class Unban implements CommandExecutor {
                             if (args.length > 1) {
                                 if (data.isBanned) {
                                     data.isBanned = false;
-                                    Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §c" + target.getName() + " §fa été débanni par §6" + sender.getName() + " §f, §c" + newStringConverted);
+                                    Bukkit.broadcastMessage("§2§lLiberty§a§lCity §7» §c" + target.getName() + " §fa été débanni, §c" + newStringConverted);
                                     for (Player p : Bukkit.getOnlinePlayers()) {
                                         if (p.hasPermission("LibertyCity.staff.alerts"))
                                             p.sendMessage("§4§LSTAFF §7» §8" + target.getName() + " §7a été débanni par §8" + sender.getName() + " §7, §8" + newStringConverted);
