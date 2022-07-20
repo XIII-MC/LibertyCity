@@ -11,6 +11,12 @@ public class PlayerData implements java.io.Serializable {
     public String name;
 
     public boolean isBanned;
+    public boolean isMuted;
+    public double muteDuration;
+    public String muteTime;
+    public double muteCalc;
+    public String muteLeft;
+    public String muteReason;
 
     public double lastReport = 30000;
     public boolean isVanished = false;
@@ -34,6 +40,7 @@ public class PlayerData implements java.io.Serializable {
     public boolean chatBanGang = false;
     public boolean chatBanPolice = false;
     public boolean chatBanGlobal = false;
+    public double lastChat = 999999;
 
     public boolean spyChatGlobal = false;
     public boolean spyChatHRP = false;
